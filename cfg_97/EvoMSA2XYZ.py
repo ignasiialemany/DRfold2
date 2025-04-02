@@ -10,7 +10,7 @@ import EvoPair
 
 
 from RNALM2 import Model
-device = "cuda"
+device = torch.device('cuda:1')
 expdir=os.path.dirname(os.path.abspath(__file__))
 
 
