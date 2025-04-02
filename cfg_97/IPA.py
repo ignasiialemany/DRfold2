@@ -10,6 +10,7 @@ lines = open(os.path.join(expdir,'newconfig')).readlines()
 attdrop = lines[0].strip().split()[-1] == '1'
 denoisee2e = lines[1].strip().split()[-1] == '1'
 ss_type =  lines[2].strip().split()[-1] 
+
 class InvariantPointAttention(nn.Module):
     def __init__(self,dim_in,dim_z,N_head=8,c=16,N_query=4,N_p_values=6,) -> None:
         super(InvariantPointAttention,self).__init__()
@@ -71,10 +72,6 @@ class InvariantPointAttention(nn.Module):
         o3 = basic.IPA_inverse_transform( torch.einsum('vhpt,gvh->ghpt',o3,attmap),rot,trans) #Lv, h, p* ,3
 
         return self.lastlinear1(o1.reshape(L,-1)) + self.lastlinear2(o2.reshape(L,-1)) + self.lastlinear3(o3.reshape(L,-1)) 
-
-
-
-        
 
 
 if __name__ == "__main__":

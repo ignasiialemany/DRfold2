@@ -31,6 +31,7 @@ ss_type =  lines[2].strip().split()[-1]
 def SignedSqrt( x):
     x = torch.sqrt(torch.relu(x)) - torch.sqrt(torch.relu(-x))
     return x
+
 class MSARow(nn.Module):
     def __init__(self,m_dim,z_dim,N_head=8,c=8):
         super(MSARow,self).__init__()

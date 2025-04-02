@@ -2,7 +2,6 @@ from numpy import select
 import torch
 from torch import nn
 from torch.nn import functional as F
-
 import basic,Structure,Evoformer,EvoPair,EvoMSA
 import math,sys,os
 from torch.utils.checkpoint import checkpoint
@@ -11,7 +10,7 @@ import EvoPair
 
 
 from RNALM2 import Model
-device = sys.argv[1]
+device = "cuda"
 expdir=os.path.dirname(os.path.abspath(__file__))
 
 
@@ -50,6 +49,7 @@ def emb_alphas(alphas,seq_idx):
         results = model(batch_tokens.to(device),repr_layers=[12])
     token_embeddings = results["representations"][12][0,1:-1]
     return token_embeddings
+
 def rnalm_alphas(alphas,seq_idx):
     seq  = ''.join(alphas)
     seqnpy=np.zeros(len(seq),dtype=int) + lmaadic['-']
@@ -155,10 +155,6 @@ def fourier_encode_dist(x, num_encodings = 20, include_self = True):
     x = torch.cat([x.sin(), x.cos()], dim=-1)
     x = torch.cat((x, orig_x), dim = -1) if include_self else x
     return x
-
-
-
-
 
 
 class RecyclingEmbedder(nn.Module):

@@ -25,7 +25,7 @@ Batch_size=3
 Num_cycle=3
 TEST_STEP=1000
 VISION_STEP=50
-device = sys.argv[1]
+device = "cuda"
 
 
 expdir=os.path.dirname(os.path.abspath(__file__))
@@ -52,7 +52,6 @@ def data_collect(pdb_seq):
     seq_idx = torch.from_numpy(seq_idx).long().to(device)
     return msa,base_x,seq_idx
     predxs,plddts = model.pred(msa,seq_idx,ss,base_x,sample_1['alpha_0'])
-
 
 
 def classifier(infasta,out_prefix,model_dir):
@@ -94,5 +93,8 @@ def classifier(infasta,out_prefix,model_dir):
     
 
 if __name__ == '__main__':
-    infasta,out_prefix,model_dir = sys.argv[2],sys.argv[3],sys.argv[4]
-    classifier(infasta,out_prefix,model_dir)
+    fast_file = expdir + "/../test/seq.fasta"
+    out_prefix = "hello"
+    model_dir = expdir + "/../test/model_hub"
+    #infasta,out_prefix,model_dir = sys.argv[2],sys.argv[3],sys.argv[4]
+    classifier(fast_file,out_prefix,model_dir)
